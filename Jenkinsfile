@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    environment {
+        DEV_SERVER = "13.204.42.72"        // correct dev server
+        SSH_KEY = "/home/ubuntu/.ssh/id_rsa"
+    }
+
     stages {
 
         stage('Checkout Code') {
@@ -11,21 +16,24 @@ pipeline {
 
         stage('Deploy to Dev Server') {
             steps {
-                sshCommand remote: [
-                    host: '13.204.42.72',
-                    user: 'ubuntu',
-                    identityFile: '/home/ubuntu/.ssh/id_rsa'
-                ], command: '''
-                    cd /home/ubuntu/node-todo-cicd-
 
-                    git pull origin master
+                // Fix permission of private key
+                sh "chmod 600 $SSH_KEY"
 
-                    npm install
+                // SSH into real dev server
+                sh """
+                    ssh -o StrictHostKeyChecking=no -i $SSH_KEY ubuntu@$DEV_SERVER '
+                        cd /home/ubuntu/node-todo-cicd-
 
-                    pkill node || true
+                        git pull origin master
 
-                    nohup node app.js > app.log 2>&1 &
-                '''
+                        npm install
+
+                        pkill node || true
+
+                        nohup node app.js > app.log 2>&1 &
+                    '
+                """
             }
         }
     }
