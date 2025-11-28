@@ -38,11 +38,10 @@ pipeline {
                         echo "Installing dependencies..."
                         npm install || exit 1
 
-                        echo "Stopping existing Node process if running..."
-                        pkill node || true
+                    
 
                         echo "Starting application..."
-                        nohup node app.js > app.log 2>&1 &
+                        node app.js
                         
                         echo "Deployment completed successfully!"
                     '
