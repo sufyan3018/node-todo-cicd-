@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DEV_SERVER = "13.204.42.72"        // Your dev server IP
+        DEV_SERVER = "13.201.223.121"        // Your dev server IP
         SSH_KEY = "/home/ubuntu/.ssh/id_rsa" // Path to private SSH key
     }
 
@@ -38,11 +38,12 @@ pipeline {
                         echo "Installing dependencies..."
                         npm install || exit 1
 
-                    
+                        echo "Stopping existing Node process if running..."
+                        pkill node || true
 
                         echo "Starting application..."
-                        node app.js
-                        
+                        nohup node app.js > app.log 2>&1 &
+
                         echo "Deployment completed successfully!"
                     '
                 """
