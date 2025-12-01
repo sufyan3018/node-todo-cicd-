@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DEV_SERVER = "13.201.223.121"         // Your dev server IP
+        DEV_SERVER = "3.111.40.206"         // Your dev server IP
         SSH_KEY = "/home/ubuntu/.ssh/id_rsa"  // Path to private SSH key on Jenkins
     }
 
