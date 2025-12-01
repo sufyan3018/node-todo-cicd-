@@ -10,7 +10,7 @@ pipeline {
         stage('Checkout Code') {
             steps {
                 echo "Checking out branch: master"
-                git branch: 'master', url: 'https://github.com/sufyan3018/node-todo-cicd-.git'
+                git branch: 'development', url: 'https://github.com/sufyan3018/node-todo-cicd-.git'
             }
         }
 
@@ -28,7 +28,7 @@ pipeline {
                             [ -s "\$NVM_DIR/bash_completion" ] && . "\$NVM_DIR/bash_completion"
 
                             echo "Pulling latest code..."
-                            git pull origin master || exit 1
+                            git pull origin development || exit 1
 
                             echo "Installing dependencies..."
                             npm install || exit 1
