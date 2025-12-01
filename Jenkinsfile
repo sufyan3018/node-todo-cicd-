@@ -9,7 +9,7 @@ pipeline {
 
         stage('Checkout Code') {
             steps {
-                echo "Checking out branch: master"
+                echo "Checking out branch: development"
                 git branch: 'development', url: 'https://github.com/sufyan3018/node-todo-cicd-.git'
             }
         }
